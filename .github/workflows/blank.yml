@@ -23,8 +23,8 @@ jobs:
 
       - name: commit
         run: |
-            git config --global user.email c897611977@gmail.com
-            git config --global user.name ElmTran
+            git config --global user.email tugodxx@gmail.com
+            git config --global user.name tugodxx
             git add .
             git commit -m "update pac" -a
 
