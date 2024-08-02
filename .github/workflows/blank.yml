@@ -1,0 +1,34 @@
+name: gfwlist2pac
+
+on:
+  workflow_dispatch:
+  schedule:
+      - cron: '0 1 * * *'
+
+jobs:
+  bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout actions
+        uses: actions/checkout@v1
+      - uses: actions/setup-python@v4
+        with:
+            python-version: '3.9'
+
+      - name: download genpac
+        run: pip install -U genpac
+
+      - name: update pac
+        run: genpac --format=pac --pac-proxy="SOCKS5 127.0.0.1:10808" -o gfwlist.pac
+
+      - name: commit
+        run: |
+            git config --global user.email c897611977@gmail.com
+            git config --global user.name ElmTran
+            git add .
+            git commit -m "update pac" -a
+
+      - name: push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.REPO_TOKEN }}
